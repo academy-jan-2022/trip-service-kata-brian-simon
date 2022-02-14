@@ -1,6 +1,5 @@
 package org.craftedsw.tripservicekata.trip;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
@@ -8,21 +7,17 @@ import org.craftedsw.tripservicekata.user.User;
 import org.craftedsw.tripservicekata.user.UserSession;
 
 public class TripService {
+	final static List<Trip> noTrips = List.of();
 
 	public List<Trip> getTripsByUser(User anotherUser) throws UserNotLoggedInException {
 		User currentUser = getLoggedUser();
 		if (!isLogged(currentUser)) {
 			throw new UserNotLoggedInException();
 		}
-		if (areFriends( currentUser, anotherUser)){
+		if (areFriends(currentUser, anotherUser)){
 			return  getTripByUser(anotherUser);
 		}
-		return noTrips();
-
-	}
-
-	private ArrayList<Trip> noTrips() {
-		return new ArrayList<Trip>();
+		return noTrips;
 	}
 
 	private boolean isLogged(User currentUser) {
