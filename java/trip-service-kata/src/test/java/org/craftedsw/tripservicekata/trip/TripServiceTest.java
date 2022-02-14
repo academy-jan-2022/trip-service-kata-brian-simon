@@ -2,6 +2,7 @@ package org.craftedsw.tripservicekata.trip;
 
 import org.craftedsw.tripservicekata.exception.UserNotLoggedInException;
 import org.craftedsw.tripservicekata.user.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,10 +13,15 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class TripServiceTest {
 
     private User user;
+    private testeableTripService tripService;
+
+    @BeforeEach
+    void setUp() {
+        tripService = new testeableTripService();
+    }
 
     @Test void
     return_exception_given_null_user(){
-        TripService tripService = new testeableTripService();
         user = null;
         assertThrows(UserNotLoggedInException.class , ()->{
             tripService.getTripsByUser(user);
@@ -25,7 +31,6 @@ public class TripServiceTest {
     @Test void
     return_no_trips_if_not_friend_with_user() {
         user = new User();
-        TripService tripService = new testeableTripService();
         User stranger = new User();
         stranger.addFriend(new User());
         stranger.addTrip(new Trip());
@@ -37,7 +42,6 @@ public class TripServiceTest {
     @Test void
     return_trips_if_friends_with_user(){
         user = new User();
-        TripService tripService = new testeableTripService();
         User friend = new User();
         friend.addFriend(user);
         Trip trip =new Trip();
@@ -46,10 +50,7 @@ public class TripServiceTest {
         assertEquals(trips.size(),1);
     }
 
-
-
     private class testeableTripService extends TripService {
-
         protected List<Trip> getTripByUser(User user) {
             return user.trips();
         }
