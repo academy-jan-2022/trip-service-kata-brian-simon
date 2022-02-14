@@ -22,8 +22,8 @@ public class TripServiceTest {
         });
     }
 
-    @Test
-    void return_no_trips_if_not_friend_with_user() {
+    @Test void
+    return_no_trips_if_not_friend_with_user() {
         user = new User();
         TripService tripService = new testeableTripService();
         User stranger = new User();
@@ -34,7 +34,26 @@ public class TripServiceTest {
         assertEquals(trips.size(), 0);
     }
 
+    @Test void
+    return_trips_if_friends_with_user(){
+        user = new User();
+        TripService tripService = new testeableTripService();
+        User friend = new User();
+        friend.addFriend(user);
+        Trip trip =new Trip();
+        friend.addTrip(trip);
+        List<Trip> trips = tripService.getTripsByUser(friend);
+        assertEquals(trips.size(),1);
+    }
+
+
+
     private class testeableTripService extends TripService {
+
+        protected List<Trip> getTripByUser(User user) {
+            return user.trips();
+        }
+
         protected User getLoggedUser(){
             return  user;
         }
