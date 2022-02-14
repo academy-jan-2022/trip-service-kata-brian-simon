@@ -12,10 +12,10 @@ public class TripService {
 	public List<Trip> getTripsByUser(User user) throws UserNotLoggedInException {
 		User loggedUser = getLoggedUser();
 		if (loggedUser != null) {
-			for (User friend : user.getFriends()) {
-				if (friend.equals(loggedUser)) {
-					return  getTripByUser(user);
-				}
+			var friends = user.getFriends();
+			var index = friends.indexOf(loggedUser);
+			if (index != -1){
+				return  getTripByUser(user);
 			}
 			return new ArrayList<Trip>();
 		}
