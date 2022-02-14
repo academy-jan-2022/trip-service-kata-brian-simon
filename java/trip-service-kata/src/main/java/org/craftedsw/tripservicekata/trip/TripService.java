@@ -17,8 +17,12 @@ public class TripService {
 		if (areFriends( currentUser, anotherUser)){
 			return  getTripByUser(anotherUser);
 		}
-		return new ArrayList<Trip>();
+		return noTrips();
 
+	}
+
+	private ArrayList<Trip> noTrips() {
+		return new ArrayList<Trip>();
 	}
 
 	private boolean isLogged(User currentUser) {
