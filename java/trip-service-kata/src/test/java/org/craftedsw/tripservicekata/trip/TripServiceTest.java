@@ -18,6 +18,7 @@ public class TripServiceTest {
     @BeforeEach
     void setUp() {
         tripService = new testeableTripService();
+        user = new User();
     }
 
     @Test void
@@ -30,7 +31,6 @@ public class TripServiceTest {
 
     @Test void
     return_no_trips_if_not_friend_with_user() {
-        user = new User();
         User stranger = new User();
         stranger.addFriend(new User());
         stranger.addTrip(new Trip());
@@ -41,7 +41,6 @@ public class TripServiceTest {
 
     @Test void
     return_trips_if_friends_with_user(){
-        user = new User();
         User friend = new User();
         friend.addFriend(user);
         Trip trip =new Trip();
