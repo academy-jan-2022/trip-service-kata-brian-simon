@@ -43,11 +43,11 @@ public class TripServiceTest {
     @Test void
     return_trips_if_friends_with_user(){
         User friend = new UserBuilder()
-                .friendsWith(user)
-                .visited(new Trip())
+                .friendsWith(user, new User())
+                .visited(new Trip(), new Trip())
                 .build();
         List<Trip> trips = tripService.getTripsByUser(friend);
-        assertEquals(trips.size(),1);
+        assertEquals(trips.size(),2);
     }
 
     private class testeableTripService extends TripService {
