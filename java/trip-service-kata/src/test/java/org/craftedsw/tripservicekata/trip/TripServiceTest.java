@@ -60,7 +60,7 @@ public class TripServiceTest {
         }
     }
 
-    private class UserBuilder {
+    private static class UserBuilder {
         User[] friends;
         Trip[] trips;
 
