@@ -25,5 +25,4 @@ public class User {
 	public List<Trip> trips() {
 		return trips;
 	}
-
 }

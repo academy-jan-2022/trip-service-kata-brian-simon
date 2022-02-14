@@ -31,9 +31,10 @@ public class TripServiceTest {
 
     @Test void
     return_no_trips_if_not_friend_with_user() {
-        User stranger = new User();
-        stranger.addFriend(new User());
-        stranger.addTrip(new Trip());
+        User stranger = new UserBuilder()
+                .friendsWith(new User())
+                .visited(new Trip())
+                .build();
 
         List<Trip> trips = tripService.getTripsByUser(stranger);
         assertEquals(trips.size(), 0);
@@ -41,10 +42,10 @@ public class TripServiceTest {
 
     @Test void
     return_trips_if_friends_with_user(){
-        User friend = new User();
-        friend.addFriend(user);
-        Trip trip =new Trip();
-        friend.addTrip(trip);
+        User friend = new UserBuilder()
+                .friendsWith(user)
+                .visited(new Trip())
+                .build();
         List<Trip> trips = tripService.getTripsByUser(friend);
         assertEquals(trips.size(),1);
     }
@@ -56,6 +57,40 @@ public class TripServiceTest {
 
         protected User getLoggedUser(){
             return  user;
+        }
+    }
+
+    private class UserBuilder {
+        User[] friends;
+        Trip[] trips;
+
+        public User build() {
+            User newUser = new User();
+            addAllTrips(newUser);
+            addAllFriends(newUser);
+            return newUser;
+        }
+
+        private void addAllFriends(User newUser) {
+            for (User friend:friends) {
+                newUser.addFriend(friend);
+            }
+        }
+
+        private void addAllTrips(User newUser) {
+            for (Trip trip:trips) {
+                newUser.addTrip(trip);
+            }
+        }
+
+        public UserBuilder friendsWith(User... friends) {
+            this.friends = friends;
+            return this;
+        }
+
+        public UserBuilder visited(Trip... trips) {
+            this.trips = trips;
+            return this;
         }
     }
 }
