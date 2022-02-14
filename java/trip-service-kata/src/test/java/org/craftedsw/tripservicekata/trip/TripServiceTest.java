@@ -51,8 +51,8 @@ public class TripServiceTest {
     }
 
     private class testeableTripService extends TripService {
-        protected List<Trip> getTripByUser(User user) {
-            return user.trips();
+        protected List<Trip> getTripByUser(User friend) {
+            return friend.trips();
         }
 
         protected User getLoggedUser(){
